@@ -49,15 +49,21 @@ task:
 
   timeout_in: 120m
 
+  matrix:
+    - name: "aarch64 Linux glibc"
+      arm_container:
+        image: ponylang/ponyc-ci-aarch64-unknown-linux-ubuntu20.04-builder:20211003
+      environment:
+        IMAGE: ponylang/ponyc-ci-aarch64-unknown-linux-ubuntu20.04-builder:20211003
+    - name: "aarch64 Linux musl"
+      arm_container:
+        image: ponylang/ponyc-ci-aarch64-unknown-linux-musl-builder:20211004
+      environment:
+        IMAGE: ponylang/ponyc-ci-aarch64-unknown-linux-musl-builder:20211004
+
   arm_container:
-    image: ponylang/ponyc-ci-aarch64-unknown-linux-ubuntu20.04-builder:20211003
     cpu: 8
     memory: 4
-
-  environment:
-    IMAGE: ponylang/ponyc-ci-aarch64-unknown-linux-ubuntu20.04-builder:20211003
-
-  name: "aarch64 Linux glibc"
 
   libs_cache:
     folder: build/libs
