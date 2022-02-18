@@ -233,6 +233,7 @@ TEST_F(BadPonyTest, TupleFieldReassign)
   TEST_ERRORS_1(src, "can't assign to an element of a tuple");
 }
 
+
 TEST_F(BadPonyTest, WithBlockTypeInference)
 {
   // From issue #1135
@@ -241,8 +242,7 @@ TEST_F(BadPonyTest, WithBlockTypeInference)
     "  new create(env: Env) =>\n"
     "    with x = 1 do None end";
 
-  TEST_ERRORS_3(src, "could not infer literal type, no valid types found",
-                     "cannot infer type of $1$0",
+  TEST_ERRORS_2(src, "could not infer literal type, no valid types found",
                      "cannot infer type of x");
 }
 

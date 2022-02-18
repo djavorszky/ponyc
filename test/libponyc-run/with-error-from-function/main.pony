@@ -4,7 +4,7 @@ use @printf[I32](fmt: Pointer[U8] tag, ...)
 class Disposable
   var _exit_code: I32
 
-  new iso create() =>
+  new create() =>
     _exit_code = 0
 
   fun ref set_exit(code: I32) =>

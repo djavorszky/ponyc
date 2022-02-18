@@ -552,6 +552,7 @@ static void build_with_dispose(ast_t* dispose_clause, ast_t* idseq)
 
 static ast_result_t sugar_with(pass_opt_t* opt, ast_t** astp)
 {
+  (void)opt;
   AST_EXTRACT_CHILDREN(*astp, withexpr, body);
   ast_t* main_annotation = ast_consumeannotation(*astp);
 
@@ -572,25 +573,18 @@ static ast_result_t sugar_with(pass_opt_t* opt, ast_t** astp)
   {
     pony_assert(ast_id(p) == TK_SEQ);
     AST_GET_CHILDREN(p, idseq, init);
-    const char* init_name = package_hygienic_id(&opt->check);
-
-    BUILD(assign, idseq,
-      NODE(TK_ASSIGN,
-        NODE(TK_LET, ID(init_name) NONE)
-        TREE(init)));
 
     BUILD(local, idseq,
       NODE(TK_ASSIGN,
         TREE(idseq)
-        NODE(TK_REFERENCE, ID(init_name))));
+        TREE(init)));
 
-    ast_add(replace, assign);
-    ast_add(dbody, local);
+    ast_add(replace, local);
     build_with_dispose(dexit, idseq);
-    ast_add(dexit, local);
   }
 
   ast_replace(astp, replace);
+
   return AST_OK;
 }
 
