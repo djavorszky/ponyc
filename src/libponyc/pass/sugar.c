@@ -558,8 +558,8 @@ static ast_result_t sugar_with(pass_opt_t* opt, ast_t** astp)
 
   // First build a skeleton disposing block without the "with" variables
   BUILD(replace, *astp,
-    NODE(TK_SEQ,
-      NODE(TK_DISPOSING_BLOCK, AST_SCOPE
+    NODE(TK_SEQ, AST_SCOPE
+      NODE(TK_DISPOSING_BLOCK,
         ANNOTATE(main_annotation)
         NODE(TK_SEQ)
         NODE(TK_SEQ, AST_SCOPE
@@ -567,7 +567,7 @@ static ast_result_t sugar_with(pass_opt_t* opt, ast_t** astp)
         NODE(TK_SEQ, AST_SCOPE))));
 
   ast_t* dblock = ast_child(replace);
-  AST_GET_CHILDREN(dblock, variables, dbody, dexit);
+  AST_GET_CHILDREN(dblock, dvariables, dbody, dexit);
 
   // Add the "with" variables from each with element
   for(ast_t* p = ast_child(withexpr); p != NULL; p = ast_sibling(p))
@@ -580,7 +580,11 @@ static ast_result_t sugar_with(pass_opt_t* opt, ast_t** astp)
         TREE(idseq)
         TREE(init)));
 
-    ast_add(variables, local);
+    BUILD(foo, idseq,
+      NODE(TK_NONE));
+
+    ast_add(replace, local);
+    ast_add(dvariables, foo);
     build_with_dispose(dexit, idseq);
   }
 

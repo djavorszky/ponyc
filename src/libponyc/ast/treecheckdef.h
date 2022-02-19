@@ -342,9 +342,8 @@ RULE(with,
   TK_WITH);
 
 RULE(disposing_block,
-  IS_SCOPE
   HAS_TYPE(type)
-  CHILD(expr) // variables
+  CHILD(seq) // variables
   CHILD(seq) // body
   CHILD(seq), // dispose
   TK_DISPOSING_BLOCK);
