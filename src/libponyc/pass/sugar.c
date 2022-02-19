@@ -561,12 +561,13 @@ static ast_result_t sugar_with(pass_opt_t* opt, ast_t** astp)
     NODE(TK_SEQ,
       NODE(TK_DISPOSING_BLOCK, AST_SCOPE
         ANNOTATE(main_annotation)
+        NODE(TK_SEQ)
         NODE(TK_SEQ, AST_SCOPE
           TREE(body))
         NODE(TK_SEQ, AST_SCOPE))));
 
   ast_t* dblock = ast_child(replace);
-  AST_GET_CHILDREN(dblock, dbody, dexit);
+  AST_GET_CHILDREN(dblock, variables, dbody, dexit);
 
   // Add the "with" variables from each with element
   for(ast_t* p = ast_child(withexpr); p != NULL; p = ast_sibling(p))
@@ -579,7 +580,7 @@ static ast_result_t sugar_with(pass_opt_t* opt, ast_t** astp)
         TREE(idseq)
         TREE(init)));
 
-    ast_add(dblock, local);
+    ast_add(variables, local);
     build_with_dispose(dexit, idseq);
   }
 
