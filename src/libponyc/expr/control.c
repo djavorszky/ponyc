@@ -306,7 +306,7 @@ bool expr_try(pass_opt_t* opt, ast_t* ast)
 bool expr_disposing_block(pass_opt_t* opt, ast_t* ast)
 {
   pony_assert(ast_id(ast) == TK_DISPOSING_BLOCK);
-  AST_GET_CHILDREN(ast, body, dispose_clause);
+  AST_GET_CHILDREN(ast, variables, body, dispose_clause);
 
   ast_t* type = NULL;
 

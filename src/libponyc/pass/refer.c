@@ -1333,7 +1333,7 @@ static bool refer_seq(pass_opt_t* opt, ast_t* ast)
 
       case TK_DISPOSING_BLOCK:
       {
-        AST_GET_CHILDREN(parent, body, dispose_clause);
+        AST_GET_CHILDREN(parent, variables, body, dispose_clause);
 
         if(body == ast)
         {
@@ -1680,7 +1680,7 @@ static bool refer_try(pass_opt_t* opt, ast_t* ast)
 static bool refer_disposing_block(ast_t* ast)
 {
   pony_assert(ast_id(ast) == TK_DISPOSING_BLOCK);
-  AST_GET_CHILDREN(ast, body, dispose_clause);
+  AST_GET_CHILDREN(ast, variables, body, dispose_clause);
 
   size_t branch_count = 0;
 

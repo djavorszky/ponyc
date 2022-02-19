@@ -506,8 +506,8 @@ static void gen_then_clauses(compile_t* c, ast_t* ast, bool within_loop)
       }
       case TK_DISPOSING_BLOCK:
       {
-        if(ast_index(last) != 1)
-          gen_expr(c, ast_childidx(parent, 1));
+        if(ast_index(last) != 2)
+          gen_expr(c, ast_childidx(parent, 2));
         break;
       }
 
@@ -728,7 +728,7 @@ LLVMValueRef gen_try(compile_t* c, ast_t* ast)
 LLVMValueRef gen_disposing_block_can_error(compile_t* c, ast_t* ast)
 {
   bool needed = is_result_needed(ast);
-  AST_GET_CHILDREN(ast, body, dispose_clause);
+  AST_GET_CHILDREN(ast, variables, body, dispose_clause);
 
   deferred_reification_t* reify = c->frame->reify;
 
@@ -823,7 +823,7 @@ LLVMValueRef gen_disposing_block_can_error(compile_t* c, ast_t* ast)
 LLVMValueRef gen_disposing_block_cant_error(compile_t* c, ast_t* ast)
 {
   bool needed = is_result_needed(ast);
-  AST_GET_CHILDREN(ast, body, dispose_clause);
+  AST_GET_CHILDREN(ast, variables, body, dispose_clause);
 
   deferred_reification_t* reify = c->frame->reify;
 
@@ -961,8 +961,8 @@ LLVMValueRef gen_error(compile_t* c, ast_t* ast)
 
       case TK_DISPOSING_BLOCK:
       {
-        if((error_handler_expr != NULL) && (clause == 0))
-          gen_expr(c, ast_childidx(error_handler_expr, 1));
+        if((error_handler_expr != NULL) && (clause == 1))
+          gen_expr(c, ast_childidx(error_handler_expr, 2));
       }
       break;
 
