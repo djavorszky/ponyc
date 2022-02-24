@@ -565,11 +565,11 @@ ast_t* ast_setid(ast_t* ast, token_id id)
   return ast;
 }
 
-void ast_setpos(ast_t* ast, source_t* source, size_t line, size_t pos)
+void ast_setpos(ast_t* ast, source_t* source, size_t line, size_t pos, size_t len)
 {
   pony_assert(ast != NULL);
   pony_assert(!ast->frozen);
-  token_set_pos(ast->t, source, line, pos);
+  token_set_pos(ast->t, source, line, pos, len);
 }
 
 token_id ast_id(ast_t* ast)
@@ -588,6 +588,12 @@ size_t ast_pos(ast_t* ast)
 {
   pony_assert(ast != NULL);
   return token_line_position(ast->t);
+}
+
+size_t ast_len(ast_t* ast)
+{
+  pony_assert(ast != NULL);
+  return token_line_length(ast->t);
 }
 
 source_t* ast_source(ast_t* ast)

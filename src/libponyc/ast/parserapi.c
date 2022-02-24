@@ -35,7 +35,7 @@ static void fetch_next_lexer_token(parser_t* parser, bool free_last_token)
   {
     // Use location of last token for EOF to get better error reporting
     token_set_pos(new_token, token_source(old_token),
-      token_line_number(old_token), token_line_position(old_token));
+      token_line_number(old_token), token_line_position(old_token), token_line_length(old_token));
   }
 
   if(old_token != NULL)
@@ -176,7 +176,7 @@ static void process_deferred_ast(parser_t* parser, rule_state_t* state)
   if(state->deferred)
   {
     token_t* deferred_token = token_new(state->deferred_id);
-    token_set_pos(deferred_token, parser->source, state->line, state->pos);
+    token_set_pos(deferred_token, parser->source, state->line, state->pos, state->len);
     state->ast = ast_token(deferred_token);
     state->deferred = false;
   }
@@ -224,6 +224,7 @@ void add_deferrable_ast(parser_t* parser, rule_state_t* state, token_id id,
     state->deferred_id = id;
     state->line = token_line_number(token_for_pos);
     state->pos = token_line_position(token_for_pos);
+    state->len = token_line_length(token_for_pos);
     return;
   }
 

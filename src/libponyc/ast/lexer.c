@@ -27,6 +27,7 @@ struct lexer_t
   // Position of current token
   size_t token_line;
   size_t token_pos;
+  size_t token_len;
 
   // Buffer containing current token text
   char* buffer;
@@ -363,7 +364,7 @@ static void append_to_token(lexer_t* lexer, char c)
 static token_t* make_token(lexer_t* lexer, token_id id)
 {
   token_t* t = token_new(id);
-  token_set_pos(t, lexer->source, lexer->token_line, lexer->token_pos);
+  token_set_pos(t, lexer->source, lexer->token_line, lexer->token_pos, lexer->token_len);
   return t;
 }
 
@@ -1299,6 +1300,7 @@ token_t* lexer_next(lexer_t* lexer)
   {
     lexer->token_line = lexer->line;
     lexer->token_pos = lexer->pos;
+    lexer->token_len = lexer->len;
     lexer->buflen = 0;
 
     if(is_eof(lexer))

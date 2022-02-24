@@ -68,11 +68,12 @@ bool ast_has_scope(ast_t* ast);
 void ast_set_scope(ast_t* ast, ast_t* scope);
 symtab_t* ast_get_symtab(ast_t* ast);
 ast_t* ast_setid(ast_t* ast, token_id id);
-void ast_setpos(ast_t* ast, source_t* source, size_t line, size_t pos);
+void ast_setpos(ast_t* ast, source_t* source, size_t line, size_t pos, size_t len);
 
 token_id ast_id(ast_t* ast);
 size_t ast_line(ast_t* ast);
 size_t ast_pos(ast_t* ast);
+size_t ast_len(ast_t* ast);
 source_t* ast_source(ast_t* ast);
 
 void* ast_data(ast_t* ast);
@@ -91,6 +92,7 @@ void ast_clearflag(ast_t* ast, uint32_t flag);
 void ast_resetpass(ast_t *ast, uint32_t flag);
 
 const char* ast_get_print(ast_t* ast);
+const char* ast_from_source_print(ast_t* ast);
 const char* ast_name(ast_t* ast);
 const char* ast_nice_name(ast_t* ast);
 size_t ast_name_len(ast_t* ast);

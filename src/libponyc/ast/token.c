@@ -28,6 +28,7 @@ struct token_t
     lexint_t integer;
   };
 
+  size_t len;
 #ifndef PONY_NDEBUG
   bool frozen;
 #endif
@@ -298,6 +299,13 @@ size_t token_line_position(token_t* token)
 }
 
 
+size_t token_line_length(token_t* token)
+{
+  pony_assert(token != NULL);
+  return token->len;
+}
+
+
 // Write accessors
 
 void token_set_id(token_t* token, token_id id)
@@ -341,7 +349,7 @@ void token_set_int(token_t* token, lexint_t* value)
 }
 
 
-void token_set_pos(token_t* token, source_t* source, size_t line, size_t pos)
+void token_set_pos(token_t* token, source_t* source, size_t line, size_t pos, size_t len)
 {
   pony_assert(token != NULL);
   pony_assert(!token->frozen);
@@ -351,6 +359,7 @@ void token_set_pos(token_t* token, source_t* source, size_t line, size_t pos)
 
   token->line = line;
   token->pos = pos;
+  token->len = len;
 }
 
 // Serialisation

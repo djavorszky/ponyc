@@ -91,7 +91,7 @@ typedef struct rule_state_t
   bool scope;           // Is this rule a scope
   bool deferred;        // Do we have a deferred AST node
   token_id deferred_id; // ID of deferred AST node
-  size_t line, pos;     // Location to claim deferred node is from
+  size_t line, pos, len;     // Location to claim deferred node is from
 } rule_state_t;
 
 
@@ -158,7 +158,7 @@ bool parse(ast_t* package, source_t* source, rule_t start, const char* expected,
   { \
     (void)out_builder; \
     rule_state_t state = {#rule, NULL, NULL, rule_desc, NULL, TK_LEX_ERROR, \
-      false, false, false, TK_NONE, 0, 0}
+      false, false, false, TK_NONE, 0, 0, 0}
 
 
 /** Specify a restart point.

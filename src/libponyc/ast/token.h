@@ -359,6 +359,9 @@ size_t token_line_number(token_t* token);
 /// Report the position within the line that the given token was found at
 size_t token_line_position(token_t* token);
 
+/// Report the length within the line that the given token takes
+size_t token_line_length(token_t* token);
+
 /// Report whether debug info should be generated.
 bool token_debug(token_t* token);
 
@@ -388,7 +391,7 @@ void token_set_int(token_t* token, lexint_t* value);
 /// Set the given token's position within its source file and optionally the
 /// source file.
 /// Set source to NULL to keep current file.
-void token_set_pos(token_t* token, source_t* source, size_t line, size_t pos);
+void token_set_pos(token_t* token, source_t* source, size_t line, size_t pos, size_t len);
 
 /// Set whether debug info should be generated.
 void token_set_debug(token_t* token, bool state);

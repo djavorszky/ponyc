@@ -675,7 +675,7 @@ static void add_fields(reach_t* r, reach_type_t* t, pass_opt_t* opt)
         bool embed = t->fields[index].embed = ast_id(member) == TK_EMBED;
         t->fields[index].ast = reify(ast_type(member), typeparams, typeargs,
           opt, true);
-        ast_setpos(t->fields[index].ast, NULL, ast_line(name), ast_pos(name));
+        ast_setpos(t->fields[index].ast, NULL, ast_line(name), ast_pos(name), ast_len(name));
         t->fields[index].type = add_type(r, type, opt);
 
         if(embed && !has_finaliser && !needs_finaliser)
