@@ -7,8 +7,8 @@
 #include <llvm/IR/Module.h>
 #include <llvm/IRReader/IRReader.h>
 #include <llvm/Linker/Linker.h>
+#include <llvm/MC/TargetRegistry.h>
 #include <llvm/Support/SourceMgr.h>
-#include <llvm/Support/TargetRegistry.h>
 #include <llvm/Target/TargetOptions.h>
 
 #include "llvm_config_end.h"
@@ -39,8 +39,8 @@ LLVMTargetMachineRef codegen_machine(LLVMTargetRef target, pass_opt_t* opt)
 
   Target* t = reinterpret_cast<Target*>(target);
 
-TargetMachine* m = t->createTargetMachine(opt->triple, opt->cpu,
-  opt->features, options, reloc, llvm::None, opt_level, false);
+  TargetMachine* m = t->createTargetMachine(opt->triple, opt->cpu,
+    opt->features, options, reloc, llvm::None, opt_level, false);
 
   return reinterpret_cast<LLVMTargetMachineRef>(m);
 }
